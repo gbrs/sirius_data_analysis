@@ -77,6 +77,36 @@ FROM
   counter
 
 
+3.1
+SELECT
+  uco.id,
+  uco.user_id
+FROM
+  user_comments uco
+  INNER JOIN users usr ON uco.user_id = usr.id
+WHERE
+  usr.gender = 'М'
+ORDER BY
+  uco.id
 
+3.2, 3.3
+SELECT
+  COUNT(*) users_cnt
+FROM
+  users usr
+  LEFT JOIN user_comments uco ON uco.user_id = usr.id
+WHERE
+  uco.id is NULL
+
+3.4
+SELECT
+   avg(length(cmt.text)) as avg_len
+FROM
+  user_comments uco
+  INNER JOIN users usr ON uco.user_id = usr.id
+  INNER JOIN comment_text cmt ON uco.id = cmt.comment_id
+WHERE
+  usr.gender = 'Ж'
+  and DATE_PART('month', uco.time_posted) = 7
 
 
