@@ -14,4 +14,19 @@ ORDER BY
   user_id
 
 
+2
+SELECT
+  user_id
+FROM
+  user_session
+WHERE
+  DATE_PART('YEAR', date) = 2023
+GROUP BY
+  user_id
+HAVING
+  COUNT(DISTINCT date) >= 5
+ORDER BY
+  user_id
+
+
 
