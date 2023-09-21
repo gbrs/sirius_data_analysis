@@ -1,0 +1,17 @@
+1
+НЕ РАБОТАЕТ!
+SELECT
+  user_id
+FROM
+  user_session
+WHERE
+  DATE_PART('YEAR', date) = 2023
+GROUP BY
+  user_id
+HAVING
+  SUM(time) >= 90
+ORDER BY
+  user_id
+
+
+
