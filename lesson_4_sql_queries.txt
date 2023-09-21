@@ -1,5 +1,4 @@
 1
-НЕ РАБОТАЕТ!
 SELECT
   user_id
 FROM
@@ -9,7 +8,7 @@ WHERE
 GROUP BY
   user_id
 HAVING
-  SUM(time) >= 90
+  SUM(time_watched) >= 90
 ORDER BY
   user_id
 
@@ -27,6 +26,49 @@ HAVING
   COUNT(DISTINCT date) >= 5
 ORDER BY
   user_id
+
+
+3
+WITH active_users AS (
+  SELECT
+    user_id
+  FROM
+    user_session
+  WHERE
+    DATE_PART('YEAR', date) = 2023
+  GROUP BY
+    user_id
+  HAVING
+    SUM(time_watched) >= 90
+
+  UNION
+
+  SELECT
+    user_id
+  FROM
+    user_session
+  WHERE
+    DATE_PART('YEAR', date) = 2023
+  GROUP BY
+    user_id
+  HAVING
+    COUNT(DISTINCT date) >= 5
+)
+
+SELECT
+  user_id,
+  SUM(time_watched) AS time,
+  COUNT(DISTINCT date) days
+FROM
+  user_session
+WHERE
+  user_id IN (SELECT * FROM active_users)
+  AND DATE_PART('YEAR', date) = 2023
+GROUP BY
+  user_id
+ORDER BY
+  user_id
+
 
 
 
